@@ -6,7 +6,7 @@ $senha = "";
 $smtp = "smtp.titan.email";
 $porta = 465;
 
-$email_contato = "teste@bikcraft.net";
+$email_contato = "conectta.condominios@gmail.com";
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
