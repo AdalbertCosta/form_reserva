@@ -38,3 +38,20 @@
 
 /* Termos */
 @import "./termos/termos.css";
+
+.cadastros {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 60px auto;
+}
+
+.cadastro-item {
+  flex: 1;
+  min-width: 320px; /* evita quebrar os campos */
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
