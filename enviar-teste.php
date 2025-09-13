@@ -43,3 +43,4 @@ try {
 } catch (Exception $e) {
   echo "<h1>Erro, mensagem não enviada.</h1>";
 }
+

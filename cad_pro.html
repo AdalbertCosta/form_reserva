@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Conectta Condomínios</title>
+  <meta name="description" content="Bicicletas elétricas de alta precisão e qualidade, feitas sob medida para o cliente. Explore o mundo na sua velocidade com a Bikcraft.">
+
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="./css/style.min.css" as="style">
+  <link rel="stylesheet" href="./css/style.min.css">
+  <script>document.documentElement.classList.add('js');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,900&family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="header-bg">
+    <div class="header container">
+      <a href="#home">
+        <img src="./img/bikcraft.svg" width="136" height="32" alt="Bikcraft">
+      </a>
+      <nav aria-label="primaria">
+        <ul class="header-menu font-1-m cor-0">
+          <li><a href="#bicicletas">Pagina Inicial</a></li>
+          <!--li><a href="#seguros">Seguros</a></li-->
+          <!--li><a href="#orcamento">Orçamento</a></li>
+          <li><a href="#contato">Contato</a></li>
+          <li><a href="#termos">Termos</a></li-->
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HOME -->
+  <main id="home" class="introducao-bg">
+    <div class="introducao container">
+      <div class="introducao-conteudo">
+        <h1 class="font-1-xxl cor-0 fadeInDown" data-anime="200">Conectando pessoas, serviços e soluções<span class="cor-p1">.</span></h1>
+        <p class="font-2-l cor-5 fadeInDown" data-anime="400">A Conectta é o hub digital que integra síndicos, moradores e prestadores em um só lugar. Gestão prática, segurança e economia para o seu condomínio.</p>
+        <a class="botao fadeInDown" data-anime="600" href="https://wa.me/5551982712025" target="_blank">Entre em contato!</a>
+
+      </div>
+      <picture data-anime="800" class="fadeInDown">
+        <source media="(max-width: 800px)" srcset="./img/bicicletas/nimbus.jpg">
+        <img src="./img/fotos/introducao.jpg" width="1280" height="1600" alt="Bicicleta elétrica preta.">
+      </picture>
+    </div>
+  </main>
+
+  
+
+  <!-- CADASTRO -->
+<section id="orcamento">
+  <div class="titulo-bg">
+    <div class="titulo container">
+      <p class="font-2-l-b cor-5">Ficha de Cadastro</p>
+      <h1 class="font-1-xxl cor-0">Seja Parceiro Conectta<span class="cor-p1">.</span></h1>
+    </div>
+  </div>
+
+  <form class="orcamento container" action="./enviar.php" method="post">
+    <div class="orcamento-produto">
+      <h2 class="font-1-xs cor-5">
+        Se torne um profissional requisitado em sua cidade ao se tornar parceiro da Conectta!
+      </h2>
+    </div>
+
+    <div class="orcamento-conteudo" id="orcamento-seguro">
+      <h2 class="font-1-xs cor-5">Escolha o plano</h2>
+      <input type="radio" name="produto" value="prata" id="prata">
+      <label for="prata">Prata <span>R$ 199</span></label>
+      <input type="radio" name="produto" value="ouro" id="ouro">
+      <label for="ouro">Ouro <span>R$ 299</span></label>
+    </div>
+    </div>
+
+    <div class="orcamento-dados form">
+      <h2 class="font-1-xs cor-9 col-2">Dados Pessoais</h2>
+      <div><label for="nome">Nome</label><input type="text" id="nome" name="nome"></div>
+      <div><label for="sobrenome">Sobrenome</label><input type="text" id="sobrenome" name="sobrenome"></div>
+      <div class="col-2"><label for="cpf">CPF</label><input type="text" id="cpf" name="cpf" placeholder="000.000.000-00"></div>
+      <div class="col-2"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+
+      <!-- Campo dinâmico -->
+      <div class="col-2">
+        <label>Áreas de Atuação (máx. 3)</label>
+        <div id="areas-container"></div>
+      </div>
+
+      <h2 class="font-1-xs cor-9 col-2">Endereço</h2>
+      <div><label for="cep">CEP</label><input type="text" id="cep" name="cep"></div>
+      <div><label for="numero">Número</label><input type="text" id="numero" name="numero"></div>
+      <div><label for="logradouro">Logradouro</label><input type="text" id="logradouro" name="logradouro"></div>
+      <div><label for="bairro">Bairro</label><input type="text" id="bairro" name="bairro"></div>
+      <div><label for="cidade">Cidade</label><input type="text" id="cidade" name="cidade"></div>
+      <div><label for="estado">Estado</label><input type="text" id="estado" name="estado"></div>
+      <button class="botao col-2">Cadastre-se!</button>
+    </div>
+  </form>
+</section>
+
+<!-- Script para carregar áreas do Supabase -->
+<script>
+  async function carregarAreas() {
+    const url = "https://SEU-PROJETO.supabase.co/rest/v1/areas"; // Troque pelo endpoint correto
+    const apiKey = "SUA_API_KEY"; // Troque pela sua API Key
+
+    const response = await fetch(url, {
+      headers: {
+        apikey: apiKey,
+        Authorization: "Bearer " + apiKey,
+      },
+    });
+
+    const areas = await response.json();
+    const container = document.getElementById("areas-container");
+
+    areas.forEach(area => {
+      const div = document.createElement("div");
+      div.classList.add("checkbox-item");
+
+      div.innerHTML = `
+        <label>
+          <input type="checkbox" name="areas[]" value="${area.id}">
+          ${area.nome}
+        </label>
+      `;
+
+      container.appendChild(div);
+    });
+  }
+
+  carregarAreas();
+
+  // Limitar seleção a 3 áreas
+  document.addEventListener("change", function(e) {
+    if (e.target.name === "areas[]") {
+      const selecionados = document.querySelectorAll('input[name="areas[]"]:checked');
+      if (selecionados.length > 3) {
+        alert("Você só pode selecionar até 3 áreas.");
+        e.target.checked = false;
+      }
+    }
+  });
+</script>
+
+
+
+
+
+
+  <!-- TERMOS -->
+  <section id="termos">
+    <div class="titulo-bg">
+      <div class="titulo container">
+        <p class="font-2-l-b cor-5">Termos de uso</p>
+        <h1 class="font-1-xxl cor-0">termos e condições<span class="cor-p1">.</span></h1>
+      </div>
+    </div>
+    <div class="termos font-2-s cor-10 container">
+      <h2>1. Política de Estorno</h2>
+      <p>1.1 Aceitamos cartões de crédito com parcelamento em até 12 vezes sem juros, dependendo da bandeira.</p>
+      <p>1.2 Para pagamentos à vista aceitamos PIX e Boleto Bancário.</p>
+
+      <h2>2. Conta do Usuário</h2>
+      <p>2.1 Ao se cadastrar, você garante que as informações fornecidas são verídicas e completas.</p>
+      <p>2.2 É de responsabilidade do usuário manter a confidencialidade de sua senha.</p>
+
+      <h2>3. Privacidade</h2>
+      <p>3.1 Seus dados pessoais serão utilizados apenas para fins de processamento do pedido e comunicação.</p>
+      <p>3.2 Não compartilhamos informações com terceiros sem consentimento.</p>
+
+      <h2>4. Alterações</h2>
+      <p>4.1 A Conectta reserva-se o direito de modificar estes Termos a qualquer momento, notificando os usuários.</p>
+    </div>
+  </section>
+
+
+  
+  <!-- FOOTER -->
+  <footer class="footer-bg">
+    <div class="footer container">
+      <img src="./img/bikcraft.svg" alt="Bikcraft">
+      <div class="footer-contato">
+        <h3 class="font-2-l-b cor-0">Contato</h3>
+        <ul class="font-2-m cor-5">
+          <a href="https://wa.me/5551982712025" target="_blank">+55 51 98271-2025</a>
+          <li><a href="mailto:conectta.condominios@gmail.com">conectta.condominios@gmail.com</a></li>
+          <li>Rua Pedro Petry, 771 - Universitário</li>
+          <li>Lajeado - RS</li>
+        </ul>
+      </div>
+      <div class="footer-informacoes">
+        <h3 class="font-2-l-b cor-0">Informações</h3>
+        <nav>
+          <ul class="font-1-m cor-5">
+            <li><a href="#bicicletas">Serviços</a></li>
+            <li><a href="#seguros">Seguros</a></li>
+            <li><a href="#orcamento">Orçamento</a></li>
+            <li><a href="#contato">Contato</a></li>
+            <li><a href="#termos">Termos e Condições</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="footer-copy font-2-m cor-6">Conectta© Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="./js/plugins/simple-anime.js"></script>
+  <script src="./js/script.js"></script>
+  <script src="./js/formulario.js"></script>
+</body>
+</html>
