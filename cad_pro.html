@@ -47,7 +47,8 @@
         </div>
       </div>
 
-      <form class="orcamento container" action="./envir_cad.php" method="post">
+      <!-- removemos action="./envir_cad.php" -->
+      <form id="cadastroForm" class="orcamento container">
         <div class="orcamento-produto">
           <h2 class="font-1-xs cor-5">
             Se torne um profissional requisitado em sua cidade ao se tornar parceiro da Conectta!
@@ -64,8 +65,8 @@
 
         <div class="orcamento-dados form">
           <h2 class="font-1-xs cor-9 col-2">Dados Pessoais</h2>
-          <div><label for="nome">Nome</label><input type="text" id="nome" name="nome"></div>
-          <div><label for="sobrenome">Sobrenome</label><input type="text" id="sobrenome" name="sobrenome"></div>
+          <div><label for="nome">Nome</label><input type="text" id="nome" name="nome" required></div>
+          <div><label for="sobrenome">Sobrenome</label><input type="text" id="sobrenome" name="sobrenome" required></div>
           <div class="col-2"><label for="cpf">CPF</label><input type="text" id="cpf" name="cpf" placeholder="000.000.000-00"></div>
           <div class="col-2"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
 
@@ -77,12 +78,13 @@
 
           <h2 class="font-1-xs cor-9 col-2">Endereço</h2>
           <div><label for="cep">CEP</label><input type="text" id="cep" name="cep"></div>
-          <div><label for="numero">Número</label><input type="text" id="numero" name="numero"></div>
           <div><label for="logradouro">Endereço</label><input type="text" id="logradouro" name="logradouro"></div>
+          <div><label for="numero">Número</label><input type="text" id="numero" name="numero"></div>
           <div><label for="bairro">Bairro</label><input type="text" id="bairro" name="bairro"></div>
           <div><label for="cidade">Cidade</label><input type="text" id="cidade" name="cidade"></div>
           <div><label for="estado">Estado</label><input type="text" id="estado" name="estado"></div>
-          <button class="botao col-2">Cadastre-se!</button>
+
+          <button type="submit" class="botao col-2">Cadastre-se!</button>
         </div>
       </form>
     </section>
@@ -114,11 +116,11 @@
     </div>
   </footer>
 
-  <!-- Script para carregar áreas do Supabase -->
+  <!-- Script para carregar áreas -->
   <script>
     async function carregarAreas() {
       const url = "https://nztpvwwoadamjpzbfegs.supabase.co/rest/v1/prestadores_areas"; 
-      const apiKey = "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56dHB2d3dvYWRhbWpwemJmZWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0OTk4MjIsImV4cCI6MjA3MjA3NTgyMn0.UIalgRwSVaBnz3IuQJM4g-Pg49yITqlktoYzG-TjazI"; 
+      const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56dHB2d3dvYWRhbWpwemJmZWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0OTk4MjIsImV4cCI6MjA3MjA3NTgyMn0.UIalgRwSVaBnz3IuQJM4g-Pg49yITqlktoYzG-TjazI"; 
 
       const response = await fetch(url, {
         headers: {
@@ -136,7 +138,7 @@
 
         div.innerHTML = `
           <label>
-            <input type="checkbox" name="areas[]" value="${area.id}">
+            <input type="checkbox" name="areas[]" value="${area.nome}">
             ${area.nome}
           </label>
         `;
@@ -147,7 +149,7 @@
 
     carregarAreas();
 
-    // Limitar seleção a 3 áreas
+    // Limitar seleção a 3
     document.addEventListener("change", function(e) {
       if (e.target.name === "areas[]") {
         const selecionados = document.querySelectorAll('input[name="areas[]"]:checked');
@@ -155,6 +157,57 @@
           alert("Você só pode selecionar até 3 áreas.");
           e.target.checked = false;
         }
+      }
+    });
+  </script>
+
+  <!-- Script para salvar no Supabase -->
+  <script>
+    const SUPABASE_URL = "https://nztpvwwoadamjpzbfegs.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56dHB2d3dvYWRhbWpwemJmZWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0OTk4MjIsImV4cCI6MjA3MjA3NTgyMn0.UIalgRwSVaBnz3IuQJM4g-Pg49yITqlktoYzG-TjazI";
+
+    document.getElementById("cadastroForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const dados = {
+        nome: document.getElementById("nome").value,
+        sobrenome: document.getElementById("sobrenome").value,
+        cpf: document.getElementById("cpf").value,
+        email: document.getElementById("email").value,
+        cep: document.getElementById("cep").value,
+        logradouro: document.getElementById("logradouro").value,
+        numero: document.getElementById("numero").value,
+        bairro: document.getElementById("bairro").value,
+        cidade: document.getElementById("cidade").value,
+        estado: document.getElementById("estado").value,
+        produto: document.querySelector('input[name="produto"]:checked')?.value || null,
+        areas: Array.from(document.querySelectorAll('input[name="areas[]"]:checked'))
+                      .map(a => a.value)
+                      .join(", ")
+      };
+
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/tab_prestadores`, {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + SUPABASE_KEY,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(dados)
+        });
+
+        if (response.ok) {
+          alert("✅ Cadastro realizado com sucesso!");
+          document.getElementById("cadastroForm").reset();
+        } else {
+          const erro = await response.json();
+          console.error("Erro:", erro);
+          alert("❌ Erro ao cadastrar. Veja o console.");
+        }
+      } catch (err) {
+        console.error("Erro inesperado:", err);
+        alert("❌ Erro de conexão com o servidor.");
       }
     });
   </script>
