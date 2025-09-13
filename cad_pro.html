@@ -31,7 +31,7 @@
       </a>
       <nav aria-label="primaria">
         <ul class="header-menu font-1-m cor-0">
-          <li><a href="#bicicletas">Pagina Inicial</a></li>
+          <li><a href="index.html">Página Inicial</a></li>
           <!--li><a href="#seguros">Seguros</a></li-->
           <!--li><a href="#orcamento">Orçamento</a></li>
           <li><a href="#contato">Contato</a></li>
@@ -68,7 +68,7 @@
     </div>
   </div>
 
-  <form class="orcamento container" action="./enviar.php" method="post">
+  <form class="orcamento container" action="./envir_cad.php" method="post">
     <div class="orcamento-produto">
       <h2 class="font-1-xs cor-5">
         Se torne um profissional requisitado em sua cidade ao se tornar parceiro da Conectta!
@@ -112,8 +112,8 @@
 <!-- Script para carregar áreas do Supabase -->
 <script>
   async function carregarAreas() {
-    const url = "https://SEU-PROJETO.supabase.co/rest/v1/areas"; // Troque pelo endpoint correto
-    const apiKey = "SUA_API_KEY"; // Troque pela sua API Key
+    const url = "https://nztpvwwoadamjpzbfegs.supabase.co/rest/v1/prestadores_areas"; // Troque pelo endpoint correto
+    const apiKey = "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56dHB2d3dvYWRhbWpwemJmZWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0OTk4MjIsImV4cCI6MjA3MjA3NTgyMn0.UIalgRwSVaBnz3IuQJM4g-Pg49yITqlktoYzG-TjazI"; // Troque pela sua API Key
 
     const response = await fetch(url, {
       headers: {
