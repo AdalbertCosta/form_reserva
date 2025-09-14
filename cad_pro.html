@@ -17,7 +17,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,900&family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
   </style>
 </head>
 
@@ -47,20 +49,11 @@
         </div>
       </div>
 
-      <!-- removemos action="./envir_cad.php" -->
       <form id="cadastroForm" class="orcamento container">
         <div class="orcamento-produto">
           <h2 class="font-1-xs cor-5">
             Se torne um profissional requisitado em sua cidade ao se tornar parceiro da Conectta!
           </h2>
-        </div>
-
-        <div class="orcamento-conteudo" id="orcamento-seguro">
-          <h2 class="font-1-xs cor-5">Escolha o plano</h2>
-          <input type="radio" name="produto" value="prata" id="prata">
-          <label for="prata">Prata <span>R$ 199</span></label>
-          <input type="radio" name="produto" value="ouro" id="ouro">
-          <label for="ouro">Ouro <span>R$ 299</span></label>
         </div>
 
         <div class="orcamento-dados form">
@@ -69,12 +62,6 @@
           <div><label for="sobrenome">Sobrenome</label><input type="text" id="sobrenome" name="sobrenome" required></div>
           <div class="col-2"><label for="cpf">CPF</label><input type="text" id="cpf" name="cpf" placeholder="000.000.000-00"></div>
           <div class="col-2"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
-
-          <!-- Campo dinâmico -->
-          <div class="col-2">
-            <label>Áreas de Atuação (máx. 3)</label>
-            <div id="areas-container"></div>
-          </div>
 
           <h2 class="font-1-xs cor-9 col-2">Endereço</h2>
           <div><label for="cep">CEP</label><input type="text" id="cep" name="cep"></div>
@@ -116,109 +103,56 @@
     </div>
   </footer>
 
-  <!-- Script para carregar áreas -->
+  <!-- SCRIPT SUPABASE -->
   <script>
-    async function carregarAreas() {
-      const url = "https://nztpvwwoadamjpzbfegs.supabase.co/rest/v1/prestadores_areas"; 
-      const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56dHB2d3dvYWRhbWpwemJmZWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0OTk4MjIsImV4cCI6MjA3MjA3NTgyMn0.UIalgRwSVaBnz3IuQJM4g-Pg49yITqlktoYzG-TjazI"; 
+    const SUPABASE_URL = "https://nztpvwwoadamjpzbfegs.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56dHB2d3dvYWRhbWpwemJmZWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0OTk4MjIsImV4cCI6MjA3MjA3NTgyMn0.UIalgRwSVaBnz3IuQJM4g-Pg49yITqlktoYzG-TjazI"; // cole aqui sua anon key
 
-      const response = await fetch(url, {
-        headers: {
-          apikey: apiKey,
-          Authorization: "Bearer " + apiKey,
-        },
-      });
+    document.getElementById("cadastroForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
 
-      const areas = await response.json();
-      const container = document.getElementById("areas-container");
+      const limparNumeros = (valor) => valor.replace(/\D/g, "");
 
-      areas.forEach(area => {
-        const div = document.createElement("div");
-        div.classList.add("checkbox-item");
+      const dados = {
+        id: crypto.randomUUID(),
+        nome: document.getElementById("nome").value,
+        sobrenome: document.getElementById("sobrenome").value,
+        cpf: document.getElementById("cpf").value ? parseInt(limparNumeros(document.getElementById("cpf").value)) : null,
+        email: document.getElementById("email").value,
+        cep: document.getElementById("cep").value ? parseInt(limparNumeros(document.getElementById("cep").value)) : null,
+        numero: document.getElementById("numero").value ? parseInt(limparNumeros(document.getElementById("numero").value)) : null,
+        endereco: document.getElementById("logradouro").value,
+        bairro: document.getElementById("bairro").value,
+        cidade: document.getElementById("cidade").value,
+        estado: document.getElementById("estado").value,
+      };
 
-        div.innerHTML = `
-          <label>
-            <input type="checkbox" name="areas[]" value="${area.nome}">
-            ${area.nome}
-          </label>
-        `;
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/tab_prestadores`, {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + SUPABASE_KEY,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify(dados)
+        });
 
-        container.appendChild(div);
-      });
-    }
-
-    carregarAreas();
-
-    // Limitar seleção a 3
-    document.addEventListener("change", function(e) {
-      if (e.target.name === "areas[]") {
-        const selecionados = document.querySelectorAll('input[name="areas[]"]:checked');
-        if (selecionados.length > 3) {
-          alert("Você só pode selecionar até 3 áreas.");
-          e.target.checked = false;
+        if (response.ok) {
+          alert("✅ Cadastro realizado com sucesso!");
+          document.getElementById("cadastroForm").reset();
+        } else {
+          const erro = await response.text();
+          console.error("Erro:", erro);
+          alert("❌ Erro ao cadastrar. Veja o console.");
         }
+      } catch (err) {
+        console.error("Erro inesperado:", err);
+        alert("❌ Erro de conexão com o servidor.");
       }
     });
   </script>
 
-  <!-- Script para salvar no Supabase -->
-  <script>
-    const SUPABASE_URL = "https://nztpvwwoadamjpzbfegs.supabase.co/rest/v1/tab_prestadores";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56dHB2d3dvYWRhbWpwemJmZWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0OTk4MjIsImV4cCI6MjA3MjA3NTgyMn0.UIalgRwSVaBnz3IuQJM4g-Pg49yITqlktoYzG-TjazI";
-
-document.getElementById("cadastroForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
-
-  // Função para limpar e converter números
-  const limparNumeros = (valor) => valor.replace(/\D/g, "");
-
-  const dados = {
-    id: crypto.randomUUID(), // gera ID único (UUID v4) para a PK
-    nome: document.getElementById("nome").value,
-    sobrenome: document.getElementById("sobrenome").value,
-    cpf: parseInt(limparNumeros(document.getElementById("cpf").value)) || null,
-    email: document.getElementById("email").value,
-    cep: parseInt(limparNumeros(document.getElementById("cep").value)) || null,
-    numero: parseInt(limparNumeros(document.getElementById("numero").value)) || null,
-    endereco: document.getElementById("logradouro").value,
-    bairro: document.getElementById("bairro").value,
-    cidade: document.getElementById("cidade").value,
-    estado: document.getElementById("estado").value,
-  };
-
-  try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/tab_prestadores`, {
-      method: "POST",
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": "Bearer " + SUPABASE_KEY,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(dados)
-    });
-
-    if (response.ok) {
-      alert("✅ Cadastro realizado com sucesso!");
-      document.getElementById("cadastroForm").reset();
-    } else {
-      const erroTexto = await response.text();
-      console.error("Erro:", erroTexto);
-
-      alert("❌ Erro ao cadastrar. Veja o console.");
-    }
-  } catch (err) {
-    console.error("Erro inesperado:", err);
-    alert("❌ Erro de conexão com o servidor.");
-  }
-});
-
-
-
-
-  </script>
-
-  <script src="./js/plugins/simple-anime.js"></script>
-  <script src="./js/script.js"></script>
-  <script src="./js/formulario.js"></script>
 </body>
 </html>
