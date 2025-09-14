@@ -201,8 +201,9 @@ document.getElementById("cadastroForm").addEventListener("submit", async functio
       alert("✅ Cadastro realizado com sucesso!");
       document.getElementById("cadastroForm").reset();
     } else {
-      const erro = await response.json();
-      console.error("Erro:", erro);
+      const erroTexto = await response.text();
+      console.error("Erro:", erroTexto);
+
       alert("❌ Erro ao cadastrar. Veja o console.");
     }
   } catch (err) {
