@@ -169,16 +169,18 @@
 document.getElementById("cadastroForm").addEventListener("submit", async function(e) {
   e.preventDefault();
 
-  const limparNumeros = (valor) => valor.replace(/\D/g, ""); // remove tudo que não for número
+  // Função para limpar e converter números
+  const limparNumeros = (valor) => valor.replace(/\D/g, "");
 
   const dados = {
+    id: crypto.randomUUID(), // gera ID único (UUID v4) para a PK
     nome: document.getElementById("nome").value,
     sobrenome: document.getElementById("sobrenome").value,
     cpf: parseInt(limparNumeros(document.getElementById("cpf").value)) || null,
     email: document.getElementById("email").value,
     cep: parseInt(limparNumeros(document.getElementById("cep").value)) || null,
     numero: parseInt(limparNumeros(document.getElementById("numero").value)) || null,
-    endereco: document.getElementById("logradouro").value, // ajustado para 'endereco'
+    endereco: document.getElementById("logradouro").value,
     bairro: document.getElementById("bairro").value,
     cidade: document.getElementById("cidade").value,
     estado: document.getElementById("estado").value,
@@ -208,6 +210,7 @@ document.getElementById("cadastroForm").addEventListener("submit", async functio
     alert("❌ Erro de conexão com o servidor.");
   }
 });
+
 
 
 
