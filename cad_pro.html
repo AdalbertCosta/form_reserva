@@ -166,50 +166,51 @@
     const SUPABASE_URL = "https://nztpvwwoadamjpzbfegs.supabase.co/rest/v1/tab_prestadores";
     const SUPABASE_KEY = "eapikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56dHB2d3dvYWRhbWpwemJmZWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0OTk4MjIsImV4cCI6MjA3MjA3NTgyMn0.UIalgRwSVaBnz3IuQJM4g-Pg49yITqlktoYzG-TjazI";
 
-    document.getElementById("cadastroForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
+document.getElementById("cadastroForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
 
-      const dados = {
-        nome: document.getElementById("nome").value,
-        sobrenome: document.getElementById("sobrenome").value,
-        cpf: document.getElementById("cpf").value,
-        email: document.getElementById("email").value,
-        cep: document.getElementById("cep").value,
-        logradouro: document.getElementById("logradouro").value,
-        numero: document.getElementById("numero").value,
-        bairro: document.getElementById("bairro").value,
-        cidade: document.getElementById("cidade").value,
-        estado: document.getElementById("estado").value,
-        produto: document.querySelector('input[name="produto"]:checked')?.value || null,
-        areas: Array.from(document.querySelectorAll('input[name="areas[]"]:checked'))
-                      .map(a => a.value)
-                      .join(", ")
-      };
+  const limparNumeros = (valor) => valor.replace(/\D/g, ""); // remove tudo que não for número
 
-      try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/tab_prestadores`, {
-          method: "POST",
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization": "Bearer " + SUPABASE_KEY,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(dados)
-        });
+  const dados = {
+    nome: document.getElementById("nome").value,
+    sobrenome: document.getElementById("sobrenome").value,
+    cpf: parseInt(limparNumeros(document.getElementById("cpf").value)) || null,
+    email: document.getElementById("email").value,
+    cep: parseInt(limparNumeros(document.getElementById("cep").value)) || null,
+    numero: parseInt(limparNumeros(document.getElementById("numero").value)) || null,
+    endereco: document.getElementById("logradouro").value, // ajustado para 'endereco'
+    bairro: document.getElementById("bairro").value,
+    cidade: document.getElementById("cidade").value,
+    estado: document.getElementById("estado").value,
+  };
 
-        if (response.ok) {
-          alert("✅ Cadastro realizado com sucesso!");
-          document.getElementById("cadastroForm").reset();
-        } else {
-          const erro = await response.json();
-          console.error("Erro:", erro);
-          alert("❌ Erro ao cadastrar. Veja o console.");
-        }
-      } catch (err) {
-        console.error("Erro inesperado:", err);
-        alert("❌ Erro de conexão com o servidor.");
-      }
+  try {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/tab_prestadores`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(dados)
     });
+
+    if (response.ok) {
+      alert("✅ Cadastro realizado com sucesso!");
+      document.getElementById("cadastroForm").reset();
+    } else {
+      const erro = await response.json();
+      console.error("Erro:", erro);
+      alert("❌ Erro ao cadastrar. Veja o console.");
+    }
+  } catch (err) {
+    console.error("Erro inesperado:", err);
+    alert("❌ Erro de conexão com o servidor.");
+  }
+});
+
+
+
   </script>
 
   <script src="./js/plugins/simple-anime.js"></script>
