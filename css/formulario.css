@@ -1,0 +1,81 @@
+/* Estilo geral dos labels */
+form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--cor-12, #333);
+  font-family: "Poppins", sans-serif;
+}
+
+/* Inputs e selects */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="password"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f7f7f7;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+/* Placeholder */
+input::placeholder,
+textarea::placeholder {
+  color: #999;
+  opacity: 0.8;
+  font-size: 0.95rem;
+}
+
+/* Foco nos campos */
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #0077cc;
+  box-shadow: 0 0 6px rgba(0, 119, 204, 0.4);
+  outline: none;
+  background-color: #fff;
+}
+
+/* Textarea */
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Botão */
+form button,
+.botao {
+  display: inline-block;
+  background-color: #0077cc;
+  color: #fff;
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+form button:hover,
+.botao:hover {
+  background-color: #005fa3;
+  transform: translateY(-2px);
+}
+
+form button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}

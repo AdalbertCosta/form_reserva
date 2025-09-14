@@ -115,3 +115,28 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Campo telefone */
+input[type="tel"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Foco no campo */
+input[type="tel"]:focus {
+  border-color: #0077cc;
+  box-shadow: 0 0 4px rgba(0, 119, 204, 0.4);
+  outline: none;
+}
+
+/* Placeholder (ex: 51 98271-2025) */
+input[type="tel"]::placeholder {
+  color: #aaa;
+  font-size: 0.95rem;
+}

@@ -10,6 +10,7 @@
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="preload" href="./css/style.min.css" as="style">
   <link rel="stylesheet" href="./css/style.min.css">
+   <link rel="stylesheet" href="./css/formulario.css">
   <script>document.documentElement.classList.add('js');</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,6 +67,7 @@
           <div><label for="sobrenome">Sobrenome</label><input type="text" id="sobrenome" name="sobrenome" required></div>
           <div class="col-2"><label for="cpf">CPF</label><input type="text" id="cpf" name="cpf" placeholder="000.000.000-00"></div>
           <div class="col-2"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+          <div class="col-2"><label for="#telefone">Telefone</label><input type="tel" id="telefone" name="telefone" required></div>
 
           <h2 class="font-1-xs cor-9 col-2">Endereço</h2>
           <div><label for="cep">CEP</label><input type="text" id="cep" name="cep"></div>
@@ -110,42 +112,64 @@
   <!-- SCRIPT SUPABASE -->
   <script>
     const SUPABASE_URL = "https://nztpvwwoadamjpzbfegs.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56dHB2d3dvYWRhbWpwemJmZWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0OTk4MjIsImV4cCI6MjA3MjA3NTgyMn0.UIalgRwSVaBnz3IuQJM4g-Pg49yITqlktoYzG-TjazI"; // cole aqui sua anon key
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56dHB2d3dvYWRhbWpwemJmZWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0OTk4MjIsImV4cCI6MjA3MjA3NTgyMn0.UIalgRwSVaBnz3IuQJM4g-Pg49yITqlktoYzG-TjazI; // troque pela anon key
 
-    document.getElementById("cadastroForm").addEventListener("submit", async function (e) {
+    const form = document.getElementById("cadastroForm");
+    const botao = form.querySelector("button[type='submit']");
+
+    const limparNumeros = (valor) => valor.replace(/\D/g, "");
+
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      const limparNumeros = (valor) => valor.replace(/\D/g, "");
+      botao.disabled = true;
+      botao.textContent = "Enviando...";
 
       const dados = {
         id: crypto.randomUUID(),
-        nome: document.getElementById("nome").value,
-        sobrenome: document.getElementById("sobrenome").value,
-        cpf: document.getElementById("cpf").value ? parseInt(limparNumeros(document.getElementById("cpf").value)) : null,
-        email: document.getElementById("email").value,
-        cep: document.getElementById("cep").value ? parseInt(limparNumeros(document.getElementById("cep").value)) : null,
-        numero: document.getElementById("numero").value ? parseInt(limparNumeros(document.getElementById("numero").value)) : null,
-        endereco: document.getElementById("logradouro").value,
-        bairro: document.getElementById("bairro").value,
-        cidade: document.getElementById("cidade").value,
-        estado: document.getElementById("estado").value,
+        nome: document.getElementById("nome").value.trim(),
+        sobrenome: document.getElementById("sobrenome").value.trim(),
+        cpf: limparNumeros(document.getElementById("cpf").value),
+        email: document.getElementById("email").value.trim(),
+        telefone: limparNumeros(document.getElementById("telefone").value),
+        cep: limparNumeros(document.getElementById("cep").value),
+        numero: document.getElementById("numero").value.trim(),
+        endereco: document.getElementById("logradouro").value.trim(),
+        bairro: document.getElementById("bairro").value.trim(),
+        cidade: document.getElementById("cidade").value.trim(),
+        estado: document.getElementById("estado").value.trim(),
+        created_at: new Date().toISOString()
       };
+
+      // Validações básicas
+      if (dados.cpf && dados.cpf.length !== 11) {
+        alert("❌ CPF deve ter 11 dígitos.");
+        botao.disabled = false;
+        botao.textContent = "Cadastre-se!";
+        return;
+      }
+      if (dados.telefone && (dados.telefone.length < 10 || dados.telefone.length > 11)) {
+        alert("❌ Telefone deve ter 10 ou 11 dígitos.");
+        botao.disabled = false;
+        botao.textContent = "Cadastre-se!";
+        return;
+      }
 
       try {
         const response = await fetch(`${SUPABASE_URL}/rest/v1/tab_prestadores`, {
           method: "POST",
           headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization": "Bearer " + SUPABASE_KEY,
+            apikey: SUPABASE_KEY,
+            Authorization: "Bearer " + SUPABASE_KEY,
             "Content-Type": "application/json",
-            "Prefer": "return=minimal"
+            Prefer: "return=minimal"
           },
           body: JSON.stringify(dados)
         });
 
         if (response.ok) {
           alert("✅ Cadastro realizado com sucesso!");
-          document.getElementById("cadastroForm").reset();
+          form.reset();
         } else {
           const erro = await response.text();
           console.error("Erro:", erro);
@@ -154,9 +178,11 @@
       } catch (err) {
         console.error("Erro inesperado:", err);
         alert("❌ Erro de conexão com o servidor.");
+      } finally {
+        botao.disabled = false;
+        botao.textContent = "Cadastre-se!";
       }
     });
   </script>
-
 </body>
 </html>
