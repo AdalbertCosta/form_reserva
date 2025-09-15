@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulário de Solicitação de Demandas</title>
   <link rel="stylesheet" href="style.css">
+  <!-- SDK Supabase -->
   <script src="https://unpkg.com/@supabase/supabase-js"></script>
 </head>
 <body>
@@ -48,10 +49,11 @@
   <p id="statusMsg"></p>
 
   <script>
-    // Configuração do Supabase
-    const SUPABASE_URL = "https://SEU-PROJETO.supabase.co";
-    const SUPABASE_KEY = "SEU-API-KEY";
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    // 🔐 Configuração do Supabase via variáveis do Netlify
+    const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+    const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_KEY;
+
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const form = document.getElementById("demandasForm");
     const statusMsg = document.getElementById("statusMsg");
@@ -59,6 +61,7 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
+
       const data = {
         nome_solicitante: formData.get("nome"),
         numero_casa: formData.get("numero_casa"),
@@ -67,14 +70,17 @@
         tipo_pessoa: formData.get("tipo_pessoa"),
         tipo_solicitacao: formData.get("tipo_solicitacao"),
         descricao: formData.get("descricao"),
+        created_at: new Date().toISOString() // Data e hora automática
       };
 
-      const { error } = await supabase.from("demandas").insert([data]);
+      const { error } = await client.from("demandas").insert([data]);
 
       if (error) {
         statusMsg.innerText = "❌ Erro ao enviar: " + error.message;
+        statusMsg.style.color = "red";
       } else {
         statusMsg.innerText = "✅ Solicitação enviada com sucesso!";
+        statusMsg.style.color = "green";
         form.reset();
       }
     });
