@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário de Solicitação de Demandas</title>
+  <meta name="description" content="Formulário para solicitar demandas do condomínio Reserva.">
+
+  <!-- Ícone e CSS -->
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="./css/style.min.css" as="style">
+  <link rel="stylesheet" href="./css/style.min.css">
+  <link rel="stylesheet" href="./css/formulario.css">
+  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- SDK Supabase -->
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header-bg">
+    <div class="header container">
+      <a href="index.html">
+        <img src="./img/bikcraft.svg" width="136" height="32" alt="Conectta">
+      </a>
+      <nav aria-label="primaria">
+        <ul class="header-menu font-1-m cor-0">
+          <li><a href="index.html" class="ativo">Página Inicial</a></li>
+          <li><a href="orcamento.html">Outros</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- FORMULÁRIO -->
+  <main>
+    <section id="orcamento">
+      <div class="titulo-bg">
+        <div class="titulo container">
+          <p class="font-2-l-b cor-5">Formulário de Solicitação</p>
+          <h1 class="font-1-xxl cor-0">Demandas do Condomínio<span class="cor-p1">.</span></h1>
+        </div>
+      </div>
+
+      <form id="demandasForm" class="orcamento container">
+        <div class="orcamento-produto">
+          <h2 class="font-1-xs cor-5">Horário de Análise das Demandas: 17:45 às 19:00 de Seg a Sex</h2>
+        </div>
+
+        <div class="orcamento-dados form">
+          <h2 class="font-1-xs cor-9 col-2">Dados da Solicitação</h2>
+
+          <div><label for="nome">Nome do Solicitante *</label>
+            <input type="text" id="nome" name="nome" required>
+          </div>
+
+          <div><label for="numero_casa">Número da Casa *</label>
+            <input type="text" id="numero_casa" name="numero_casa" required>
+          </div>
+
+          <div><label for="whatsapp">WhatsApp</label>
+            <input type="text" id="whatsapp" name="whatsapp">
+          </div>
+
+          <div><label for="email">E-mail</label>
+            <input type="email" id="email" name="email">
+          </div>
+
+          <div><label for="tipo_pessoa">Perfil *</label>
+            <select id="tipo_pessoa" name="tipo_pessoa" required>
+              <option value="Proprietário">Proprietário</option>
+              <option value="Inquilino">Inquilino</option>
+            </select>
+          </div>
+
+          <div><label for="tipo_solicitacao">Tipo de Solicitação *</label>
+            <select id="tipo_solicitacao" name="tipo_solicitacao" required>
+              <option value="Solicitação de Reparos/Serviços">Solicitação de Reparos/Serviços</option>
+              <option value="Informe/Reclamação">Informe/Reclamação</option>
+              <option value="Agendamento Salão de Festas">Agendamento Salão de Festas</option>
+              <option value="Sugestão de Melhoria">Sugestão de Melhoria</option>
+              <option value="Pedido de Informação">Pedido de Informação</option>
+            </select>
+          </div>
+
+          <div class="col-2"><label for="descricao">Descrição da Solicitação *</label>
+            <textarea id="descricao" name="descricao" rows="5" required></textarea>
+          </div>
+
+          <button type="submit" class="botao col-2">Enviar Solicitação</button>
+        </div>
+      </form>
+      <p id="statusMsg" style="text-align:center; margin-top:1rem;"></p>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer-bg">
+    <div class="footer container">
+      <img src="./img/bikcraft.svg" alt="Conectta">
+      <div class="footer-contato">
+        <h3 class="font-2-l-b cor-0">Contato</h3>
+        <ul class="font-2-m cor-5">
+          <li><a href="https://wa.me/5551982712025" target="_blank">+55 51 98271-2025</a></li>
+          <li><a href="mailto:conectta.condominios@gmail.com">conectta.condominios@gmail.com</a></li>
+          <li>Rua Pedro Petry, 771 - Universitário</li>
+          <li>Lajeado - RS</li>
+        </ul>
+      </div>
+      <div class="footer-informacoes">
+        <h3 class="font-2-l-b cor-0">Informações</h3>
+        <nav>
+          <ul class="font-1-m cor-5">
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="orcamento.html">Outros</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="footer-copy font-2-m cor-6">Conectta© Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT SUPABASE -->
+  <script>
+    const SUPABASE_URL = "https://SEU-PROJETO.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImltZm15c3Vja2Nxb2NmcmlmZWxlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NzE4OTksImV4cCI6MjA3MzU0Nzg5OX0.adD92pCg4q3l6VlIdUby3ozD4l_HyvY2xMrygT3LxF8"; // ⚠️ Substitua pela chave anônima
+
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const form = document.getElementById("demandasForm");
+    const statusMsg = document.getElementById("statusMsg");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        nome_solicitante: document.getElementById("nome").value.trim(),
+        numero_casa: document.getElementById("numero_casa").value.trim(),
+        whatsapp: document.getElementById("whatsapp").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        tipo_pessoa: document.getElementById("tipo_pessoa").value,
+        tipo_solicitacao: document.getElementById("tipo_solicitacao").value,
+        descricao: document.getElementById("descricao").value.trim(),
+        created_at: new Date().toISOString()
+      };
+
+      const { error } = await client.from("demandas").insert([data]);
+
+      if (error) {
+        statusMsg.innerText = "❌ Erro ao enviar: " + error.message;
+        statusMsg.style.color = "red";
+      } else {
+        statusMsg.innerText = "✅ Solicitação enviada com sucesso!";
+        statusMsg.style.color = "green";
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
