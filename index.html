@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Conectta Condomínios</title>
-  <meta name="description" content="Gestão de Prestados de Serviços">
+  <title>Solicitação de Demandas - Conectta</title>
+  <meta name="description" content="Envie sua solicitação de demandas para o condomínio de forma rápida e organizada.">
 
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="preload" href="./css/style.min.css" as="style">
   <link rel="stylesheet" href="./css/style.min.css">
+  <link rel="stylesheet" href="./css/formulario.css">
   <script>document.documentElement.classList.add('js');</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,245 +17,91 @@
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,900&family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
   </style>
 </head>
-
 <body>
   <!-- HEADER -->
   <header class="header-bg">
     <div class="header container">
-      <a href="#home">
-        <img src="./img/bikcraft.svg" width="136" height="32" alt="Bikcraft">
+      <a href="index.html">
+        <img src="./img/bikcraft.svg" width="136" height="32" alt="Conectta">
       </a>
       <nav aria-label="primaria">
         <ul class="header-menu font-1-m cor-0">
-          <!--li><a href="#seguros">Seguros</a></li-->
-          <!--li><a href="#orcamento">Orçamento</a></li-->
-          <li><a href="#contato">Contato</a></li-->
-          <li><a href="#termos">Termos</a></li>
+          <li><a href="index.html">Página Inicial</a></li>
+          <li><a href="demandas.html" class="ativo">Demandas</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- HOME -->
-  <main id="home" class="introducao-bg">
-    <div class="introducao container">
-      <div class="introducao-conteudo">
-        <h1 class="font-1-xxl cor-0 fadeInDown" data-anime="200">Conectando pessoas, serviços e soluções<span class="cor-p1">.</span></h1>
-        <p class="font-2-l cor-5 fadeInDown" data-anime="400">A Conectta é o hub digital que integra síndicos, moradores e prestadores em um só lugar. Gestão prática, segurança e economia para o seu condomínio. Caro prestador de serviços, acesse e preencha nossa ficha cadastral e faça parte do maior hub de serviços voltados para prédios e condomínios.</p>
-        <a class="botao fadeInDown" data-anime="600" href="cad_pro.html">Cadastro Prestadores</a>
-
-        
-
+  <!-- FORMULÁRIO DE DEMANDAS -->
+  <main>
+    <section id="demandas">
+      <div class="titulo-bg">
+        <div class="titulo container">
+          <p class="font-2-l-b cor-5">Formulário de Solicitação</p>
+          <h1 class="font-1-xxl cor-0">Envie sua Demanda<span class="cor-p1">.</span></h1>
+        </div>
       </div>
-      <picture data-anime="800" class="fadeInDown">
-        <source media="(max-width: 800px)" srcset="./img/bicicletas/nimbus.jpg">
-        <img src="./img/fotos/introducao.jpg" width="1280" height="1600" alt="Bicicleta elétrica preta.">
-      </picture>
-    </div>
-  </main>
 
-  
-
-  <!-- SEÇÃO SERVIÇOS -->
-  <article class="bicicletas-lista">
-    <h2 class="container font-1-xxl">nossas soluções<span class="cor-p1">.</span></h2>
-    <ul>
-      <li>
-        <a href="#bicicletas">
-          <img src="./img/bicicletas/magic-home.jpg" alt="Bicicleta preta" width="920" height="1040">
-          <h3 class="font-1-xl">Manutenção Predial</h3>
-          <span class="font-2-m cor-8">Solicite on-line</span>
-        </a>
-      </li>
-      <li>
-        <a href="#bicicletas">
-          <img src="./img/bicicletas/nimbus-home.jpg" alt="Bicicleta preta" width="920" height="1040">
-          <h3 class="font-1-xl">Limpeza & Jardinagem</h3>
-          <span class="font-2-m cor-8">Agende fácil</span>
-        </a>
-      </li>
-      <li>
-        <a href="#bicicletas">
-          <img src="./img/bicicletas/nebula-home.jpg" alt="Bicicleta preta" width="920" height="1040">
-          <h3 class="font-1-xl">Segurança & Monitoramento</h3>
-          <span class="font-2-m cor-8">24h de confiança</span>
-        </a>
-      </li>
-    </ul>
-  </article>
-
-  <!-- TERMOS -->
-  <section id="termos">
-    <div class="titulo-bg">
-      <div class="titulo container">
-        <p class="font-2-l-b cor-5">Termos de uso</p>
-        <h1 class="font-1-xxl cor-0">termos e condições<span class="cor-p1">.</span></h1>
-      </div>
-    </div>
-    <div class="termos font-2-s cor-10 container">
-      <h2>1. Política de Estorno</h2>
-      <p>1.1 Aceitamos cartões de crédito com parcelamento em até 12 vezes sem juros, dependendo da bandeira.</p>
-      <p>1.2 Para pagamentos à vista aceitamos PIX e Boleto Bancário.</p>
-
-      <h2>2. Conta do Usuário</h2>
-      <p>2.1 Ao se cadastrar, você garante que as informações fornecidas são verídicas e completas.</p>
-      <p>2.2 É de responsabilidade do usuário manter a confidencialidade de sua senha.</p>
-
-      <h2>3. Privacidade</h2>
-      <p>3.1 Seus dados pessoais serão utilizados apenas para fins de processamento do pedido e comunicação.</p>
-      <p>3.2 Não compartilhamos informações com terceiros sem consentimento.</p>
-
-      <h2>4. Alterações</h2>
-      <p>4.1 A Conectta reserva-se o direito de modificar estes Termos a qualquer momento, notificando os usuários.</p>
-    </div>
-  </section>
-
-    <!-- CONTATO -->
-  <section id="contato">
-    <div class="titulo-bg">
-      <div class="titulo container">
-        <p class="font-2-l-b cor-5">Respostas em até 24h</p>
-        <h1 class="font-1-xxl cor-0">nosso contato<span class="cor-p1">.</span></h1>
-      </div>
-    </div>
-
-    <div class="contato container">
-      <section class="contato-dados" aria-label="Endereço">
-        <h2 class="font-1-m cor-0">matriz</h2>
-        <div class="contato-endereco font-2-s cor-4">
-          <p>Rua Pedro Petry, 771</p>
-          <p>Lajeado - RS</p>
+      <form id="demandasForm" class="orcamento container">
+        <div class="orcamento-produto">
+          <h2 class="font-1-xs cor-5">Horário de análise das demandas: 17h45 às 19h00 (Seg a Sex)</h2>
         </div>
-        <address class="contato-meios font-2-s cor-4">
-          <li><a href="mailto:conectta.condominios@gmail.com">conectta.condominios@gmail.com</a></li>
-          <a href="https://wa.me/5551982712025" target="_blank">+55 51 98271-2025</a>
-        </address>
-        <div class="contato-redes">
-          <a href="#"><img src="./img/redes/instagram-p.svg" alt="Instagram"></a>
-          <a href="#"><img src="./img/redes/facebook-p.svg" alt="Facebook"></a>
-          <a href="#"><img src="./img/redes/youtube-p.svg" alt="Youtube"></a>
+
+        <div class="orcamento-dados form">
+          <h2 class="font-1-xs cor-9 col-2">Dados do Solicitante</h2>
+
+          <div><label for="nome">Nome *</label><input type="text" id="nome" name="nome" required></div>
+          <div><label for="numero_casa">Número da Casa *</label><input type="text" id="numero_casa" name="numero_casa" required></div>
+          <div class="col-2"><label for="whatsapp">WhatsApp</label><input type="text" id="whatsapp" name="whatsapp" placeholder="(51) 99999-9999"></div>
+          <div class="col-2"><label for="email">E-mail</label><input type="email" id="email" name="email"></div>
+
+          <h2 class="font-1-xs cor-9 col-2">Perfil</h2>
+          <div class="col-2">
+            <label for="tipo_pessoa">Você é:</label>
+            <select id="tipo_pessoa" name="tipo_pessoa" required>
+              <option value="">Selecione</option>
+              <option value="Proprietário">Proprietário</option>
+              <option value="Inquilino">Inquilino</option>
+            </select>
+          </div>
+
+          <h2 class="font-1-xs cor-9 col-2">Tipo de Solicitação</h2>
+          <div class="col-2">
+            <select id="tipo_solicitacao" name="tipo_solicitacao" required>
+              <option value="">Selecione</option>
+              <option value="Solicitação de Reparos/Serviços">Solicitação de Reparos/Serviços</option>
+              <option value="Informe/Reclamação">Informe/Reclamação</option>
+              <option value="Agendamento Salão de Festas">Agendamento Salão de Festas</option>
+              <option value="Sugestão de Melhoria">Sugestão de Melhoria</option>
+              <option value="Pedido de Informação">Pedido de Informação</option>
+            </select>
+          </div>
+
+          <div class="col-2">
+            <label for="descricao">Descrição da Solicitação *</label>
+            <textarea id="descricao" name="descricao" rows="6" required></textarea>
+          </div>
+
+          <button type="submit" class="botao col-2">Enviar Solicitação</button>
         </div>
-      </section>
-
-      <script type="module">
-      import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
-      const SUPABASE_URL = "https://nztpvwwoadamjpzbfegs.supabase.co";
-      const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56dHB2d3dvYWRhbWpwemJmZWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0OTk4MjIsImV4cCI6MjA3MjA3NTgyMn0.UIalgRwSVaBnz3IuQJM4g-Pg49yITqlktoYzG-TjazI";
-      const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
-      const form = document.getElementById("form-contato");
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const dados = {
-          nome: document.getElementById("nome").value,
-          telefone: document.getElementById("telefone").value,
-          email: document.getElementById("email").value,
-          servico: document.getElementById("servico").value,
-          mensagem: document.getElementById("mensagem").value,
-        };
-
-        const { error } = await supabase
-          .from("tabela_contato")
-          .insert([dados]);
-
-        if (error) {
-          alert("❌ Erro ao enviar: " + error.message);
-        } else {
-          alert("✅ Solicitação enviada com sucesso!");
-          form.reset();
-        }
-      });
-    </script>
-
-    <section class="contato-formulario" aria-label="Formulário">
-      <h2>Envie sua mensagem</h2>
-      <form id="form-contato" class="form">
-        <div>
-          <label for="nome">Nome</label>
-          <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
-        </div>
-        <div>
-          <label for="telefone">Telefone</label>
-          <input type="text" id="telefone" name="telefone" placeholder="(51) 99999-9999">
-        </div>
-        <div>
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="contato@email.com" required>
-        </div>
-        <div>
-          <label for="servico">Serviço</label>
-          <textarea id="servico" name="servico" rows="2" placeholder="De qual profissional necessita?"></textarea>
-        </div>
-        <div>
-          <label for="mensagem">Mensagem</label>
-          <textarea id="mensagem" name="mensagem" rows="5" placeholder="Informe mais detalhes"></textarea>
-        </div>
-        <button type="submit" class="botao">Enviar Mensagem</button>
       </form>
     </section>
-
-
-      
-
-
-   </div>
-<article class="lojas container">
-
-
-  <div class="lojas-item">
-    <img src="./img/lojas/sp.jpg" alt="mapa Porto Alegre">
-    <div class="lojas-conteudo">
-      <h3 class="font-1-xl">Porto Alegre</h3>
-      <div class="lojas-dados font-2-s cor-8">
-        <p>Rua Ali Perto, 25</p>
-        <p>Porto Alegre - RS</p>
-      </div>
-      <div class="lojas-dados font-2-s cor-8">
-        <a href="mailto:poa@conectta.com">poa@conectta.com</a>
-        <a href="https://wa.me/5551982712025" target="_blank">+55 51 98271-2025</a>
-      </div>
-      <p class="lojas-tempo font-1-s"><img src="./img/icones/horario.svg" alt="">08-18h de seg à dom</p>
-    </div>
-  </div>
-
-  
-  <div class="lojas-item">
-    <img src="./img/lojas/sp.jpg" alt="mapa Fortaleza">
-    <div class="lojas-conteudo">
-      <h3 class="font-1-xl">Fortaleza</h3>
-      <div class="lojas-dados font-2-s cor-8">
-        <p>Rua Ali Perto, 25</p>
-        <p>Fortaleza - CE</p>
-      </div>
-      <div class="lojas-dados font-2-s cor-8">
-        <a href="mailto:fortaleza@conectta.com">fortaleza@conectta.com</a>
-        <a href="https://wa.me/5551982712025" target="_blank">+55 51 98271-2025</a>
-      </div>
-      <p class="lojas-tempo font-1-s"><img src="./img/icones/horario.svg" alt="">08-18h de seg à dom</p>
-    </div>
-  </div>
-
-  
-</article>
-
-
-
-   
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer-bg">
     <div class="footer container">
-      <img src="./img/bikcraft.svg" alt="Bikcraft">
+      <img src="./img/bikcraft.svg" alt="Conectta">
       <div class="footer-contato">
         <h3 class="font-2-l-b cor-0">Contato</h3>
         <ul class="font-2-m cor-5">
-          <a href="https://wa.me/5551982712025" target="_blank">+55 51 98271-2025</a>
+          <li><a href="https://wa.me/5551982712025" target="_blank">+55 51 98271-2025</a></li>
           <li><a href="mailto:conectta.condominios@gmail.com">conectta.condominios@gmail.com</a></li>
           <li>Rua Pedro Petry, 771 - Universitário</li>
           <li>Lajeado - RS</li>
@@ -265,9 +110,9 @@
       <div class="footer-informacoes">
         <h3 class="font-2-l-b cor-0">Informações</h3>
         <nav>
-          <ul class="font-1-m cor-5">   
-            <li><a href="#contato">Contato</a></li>
-            <li><a href="#termos">Termos e Condições</a></li>
+          <ul class="font-1-m cor-5">
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="demandas.html">Demandas</a></li>
           </ul>
         </nav>
       </div>
@@ -275,8 +120,61 @@
     </div>
   </footer>
 
-  <script src="./js/plugins/simple-anime.js"></script>
-  <script src="./js/script.js"></script>
-  <script src="./js/formulario.js"></script>
+  <!-- SCRIPT SUPABASE -->
+  <script>
+    const SUPABASE_URL = "https://imfmysuckcqocfrifele.supabase.co/rest/v1/demandas' \
+-H";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImltZm15c3Vja2Nxb2NmcmlmZWxlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc5NzE4OTksImV4cCI6MjA3MzU0Nzg5OX0.adD92pCg4q3l6VlIdUby3ozD4l_HyvY2xMrygT3LxF8I";
+
+    const form = document.getElementById("demandasForm");
+    const botao = form.querySelector("button[type='submit']");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      botao.disabled = true;
+      botao.textContent = "Enviando...";
+
+      const dados = {
+        id: crypto.randomUUID(),
+        nome_solicitante: document.getElementById("nome").value.trim(),
+        numero_casa: document.getElementById("numero_casa").value.trim(),
+        whatsapp: document.getElementById("whatsapp").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        tipo_pessoa: document.getElementById("tipo_pessoa").value,
+        tipo_solicitacao: document.getElementById("tipo_solicitacao").value,
+        descricao: document.getElementById("descricao").value.trim(),
+        created_at: new Date().toISOString()
+      };
+
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/demandas`, {
+          method: "POST",
+          headers: {
+            apikey: SUPABASE_KEY,
+            Authorization: "Bearer " + SUPABASE_KEY,
+            "Content-Type": "application/json",
+            Prefer: "return=minimal"
+          },
+          body: JSON.stringify(dados)
+        });
+
+        if (response.ok) {
+          alert("✅ Solicitação enviada com sucesso!");
+          form.reset();
+        } else {
+          const erro = await response.text();
+          console.error("Erro:", erro);
+          alert("❌ Erro ao enviar. Veja o console.");
+        }
+      } catch (err) {
+        console.error("Erro inesperado:", err);
+        alert("❌ Erro de conexão com o servidor.");
+      } finally {
+        botao.disabled = false;
+        botao.textContent = "Enviar Solicitação";
+      }
+    });
+  </script>
 </body>
 </html>
