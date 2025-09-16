@@ -1,13 +1,20 @@
 // netlify/functions/insert-demand.js
 export async function handler(event) {
   try {
+    if (event.httpMethod !== "POST") {
+      return {
+        statusCode: 405,
+        body: JSON.stringify({ error: "Método não permitido" })
+      };
+    }
+
     const data = JSON.parse(event.body);
 
-    const response = await fetch(`${process.env.VITE_SUPABASE_URL}/rest/v1/demandas`, {
+    const response = await fetch(`${process.env.SUPABASE_URL}/rest/v1/demandas`, {
       method: "POST",
       headers: {
-        apikey: process.env.VITE_SUPABASE_KEY,
-        Authorization: `Bearer ${process.env.VITE_SUPABASE_KEY}`,
+        apikey: process.env.SUPABASE_KEY,
+        Authorization: `Bearer ${process.env.SUPABASE_KEY}`,
         "Content-Type": "application/json",
         Prefer: "return=minimal"
       },
@@ -16,6 +23,7 @@ export async function handler(event) {
 
     if (!response.ok) {
       const erro = await response.text();
+      console.error("Erro Supabase:", erro);
       return { statusCode: response.status, body: erro };
     }
 
@@ -25,6 +33,7 @@ export async function handler(event) {
     };
 
   } catch (err) {
+    console.error("Erro inesperado:", err);
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
 }
